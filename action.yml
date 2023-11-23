@@ -17,9 +17,13 @@ inputs:
   run:
     description: 'Takes the shell commands as input and runs them in a shell with the virtual environment activated'
     required: true
+  venv-dir:
+    description: 'Path to venv'
+    required: false
+    default: '.venv'
 outputs:
   env:
-    venv-path: ${{ steps.create-venv.outputs.venv_path }}
+    venv-path: ${{ steps.create-venv.outputs.venv-dir }}
 runs:
   using: "composite"
   steps:
@@ -30,15 +34,20 @@ runs:
       uses: actions/setup-python@v4
       with:
         python-version: ${{ inputs.python-version }}
+      run: python -m venv ${{ inputs.venv-dir }}
+      shell: bash
     - name: Install requirements
       run: |
         python -m pip install -r ${{ inputs.requirements-file }}
         python -m pip install ${{ inputs.requirements }}
+      shell: bash
     - name: Install Constraints
       run: |
         python -m pip install -c ${{ inputs.constraints-file }}
         python -m pip install ${{ inputs.constraints }}
+      shell: bash
     - name: Run additional shell commands in venv
       run: |
-        source ${{ steps.create-venv.outputs.venv_path }}/bin/activate
+        source ${{ steps.create-venv.outputs.venv-dir }}/bin/activate
         ${{ inputs.run }}
+      shell: bash
