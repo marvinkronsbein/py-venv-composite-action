@@ -11,6 +11,9 @@ inputs:
   constraints-file:
     description: 'Path to requirement constraints file'
     required: true
+  requirements:
+    description: 'Package versions to be installed in the virtual environment'
+    required: true
   constraints:
     description: 'Constraints on inidividual package versions'
     required: true
