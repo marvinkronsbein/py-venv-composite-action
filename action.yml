@@ -11,12 +11,6 @@ inputs:
   constraints-file:
     description: 'Path to requirement constraints file'
     required: true
-  requirements:
-    description: 'Package versions to be installed in the virtual environment'
-    required: true
-  constraints:
-    description: 'Constraints on inidividual package versions'
-    required: true
   run:
     description: 'Takes the shell commands as input and runs them in a shell with the virtual environment activated'
     required: true
@@ -38,18 +32,11 @@ runs:
         source .venv/bin/activate
         echo "VIRTUAL ENV:" $VIRTUAL_ENV
       shell: bash
-    - name: Install requirements
+    - name: Install packages
       run: |
-        python -m pip install -r ${{ inputs.requirements-file }}
-        python -m pip install ${{ inputs.requirements }}
-      shell: bash
-    - name: Install Constraints
-      run: |
-        python -m pip install -c ${{ inputs.constraints-file }}
-        python -m pip install ${{ inputs.constraints }}
+        python -m pip install -r ${{ inputs.requirements-file }} -c ${{ inputs.constraints-file }}
       shell: bash
     - name: Run additional shell commands in venv
       run: |
-        source .venv/bin/activate
         ${{ inputs.run }}
       shell: bash
