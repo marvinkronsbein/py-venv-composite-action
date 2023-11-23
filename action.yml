@@ -1,6 +1,6 @@
 # Github Action for Python Virtual Environments
 name: 'Python venv setup'
-description: 'Configures python virtural environment and runs additonal steps'
+description: 'Configures python virtual environment and runs additonal steps'
 inputs: 
   python-version:
     description: 'Python version, default is 3.8'
@@ -42,8 +42,3 @@ runs:
       run: |
         source ${{ steps.create-venv.outputs.venv_path }}/bin/activate
         ${{ inputs.run }}
-    
-    
-
-
-
