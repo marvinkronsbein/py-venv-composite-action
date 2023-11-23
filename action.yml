@@ -21,9 +21,6 @@ inputs:
     description: 'Path to venv'
     required: false
     default: '.venv'
-outputs:
-  env:
-    venv-path: ${{ steps.create-venv.outputs.venv-dir }}
 runs:
   using: "composite"
   steps:
@@ -48,6 +45,6 @@ runs:
       shell: bash
     - name: Run additional shell commands in venv
       run: |
-        source ${{ steps.create-venv.outputs.venv-dir }}/bin/activate
+        source .venv/bin/activate
         ${{ inputs.run }}
       shell: bash
