@@ -14,6 +14,10 @@ inputs:
   run:
     description: 'Takes the shell commands as input and runs them in a shell with the virtual environment activated'
     required: true
+outputs:
+  venv-path:
+    description: 'Path to virtual environment directory'
+    value: $VIRTUAL_ENV
 runs:
   using: "composite"
   steps:
